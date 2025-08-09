@@ -2,7 +2,7 @@
 
 [English](README.md)
 
-MoodeOled est une interface utilisateur sur écran Oled ssd1306 pour contrôler [Moode Audio] (https://moodeaudio.org/) via une télécommande IR ou des boutons GPIO.
+MoodeOled est une interface utilisateur sur écran Oled ssd1306 128x64 pour contrôler [Moode Audio] (https://moodeaudio.org/) via une télécommande IR ou des boutons GPIO.
 
 ---
 
