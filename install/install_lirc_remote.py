@@ -470,7 +470,7 @@ def map_remote_keys(lang, edit_mode=False):
         "KEY_CHANNELUP", "KEY_CHANNELDOWN", "KEY_PLAY"
     ]
     optional_keys = [
-        "KEY_PAUSE", "KEY_STOP", "KEY_NEXT", "KEY_PREVIOUS",
+        "KEY_STOP", "KEY_NEXT", "KEY_PREVIOUS",
         "KEY_FORWARD", "KEY_REWIND", "KEY_VOLUMEUP",
         "KEY_VOLUMEDOWN", "KEY_MUTE", "KEY_POWER"
     ]
@@ -558,7 +558,7 @@ def map_single_key(key_name, config, lang):
                     "KEY_UP", "KEY_DOWN", "KEY_LEFT", "KEY_RIGHT",
                     "KEY_OK", "KEY_BACK", "KEY_INFO",
                     "KEY_CHANNELUP", "KEY_CHANNELDOWN", "KEY_PLAY",
-                    "KEY_PAUSE", "KEY_STOP", "KEY_NEXT", "KEY_PREVIOUS",
+                    "KEY_STOP", "KEY_NEXT", "KEY_PREVIOUS",
                     "KEY_FORWARD", "KEY_REWIND", "KEY_VOLUMEUP",
                     "KEY_VOLUMEDOWN", "KEY_MUTE", "KEY_POWER"
                 ]
