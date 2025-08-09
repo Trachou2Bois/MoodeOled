@@ -301,8 +301,8 @@ def main():
                 break
 
     update_ready_script()
-    configure_hardware()
     append_to_profile()
+    configure_hardware()
 
 if __name__ == "__main__":
     main()
