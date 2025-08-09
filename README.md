@@ -233,7 +233,7 @@ Possible future improvements:
 License and attribution
 
 This project is licensed under the GNU General Public License v3.0 (GPLv3).  
-See the [LICENSE.txt](./LICENSE.txt) file for details.
+See the [LICENSE](./LICENSE) file for details.
 
 This project is based on Moode Audio Player and may reuse various code patterns and configuration approaches.  
 Moode is licensed under GPLv3: https://moodeaudio.org/LICENSE.txt
