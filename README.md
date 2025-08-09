@@ -2,7 +2,7 @@
 
 [Français](README.fr.md)
 
-MoodeOLED is a user interface for an SSD1306 128x64 OLED screen to control [Moode Audio](https://moodeaudio.org/) via an IR remote control or GPIO buttons.
+MoodeOLED is a user interface for an SSD1306/SSD1315 128x64 OLED screen to control [Moode Audio](https://moodeaudio.org/) via an IR remote control or GPIO buttons.
 
 ---
 
