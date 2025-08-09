@@ -2,7 +2,7 @@
 /*
  * SPDX-License-Identifier: GPL-3.0-or-later
  * Copyright 2025 MoodeOled project / Benoit Toufflet
- * Portions copyright 2014 The moOde audio player project / Tim Curtis
+ * Copyright 2014 The moOde audio player project / Tim Curtis
  */
 require_once "/var/www/inc/common.php";
 require_once "/var/www/inc/session.php";
