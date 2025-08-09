@@ -98,6 +98,7 @@ python3 ~/MoodeOLED/install/install_lirc_remote.py
 
 Fonctionnalités :
 
+-Installation et configuration de LIRC.
 - Test matériel (mode2, irw).
 - Télécharger une configuration depuis `irdb-get`.
 - Apprentissage d'une télécommande (`irrecord`).
@@ -125,7 +126,7 @@ KEY_NEXT = KEY_NEXTSONG
 ## ⌨ Support GPIO et encodeur
 
 MoodeOLED utilise `lgpio`, compatible Raspberry Pi 4/5 sous Bookworm.  
-Vous pouvez configurer les boutons GPIO ou les encodeurs rotatifs dans `config.ini`.
+Vous pouvez configurer les boutons GPIO ou un encodeur rotatif dans `config.ini`.
 
 Exemple :
 
