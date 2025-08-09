@@ -125,8 +125,7 @@ KEY_NEXT = KEY_NEXTSONG
 
 ## ⌨ Support GPIO et encodeur
 
-MoodeOLED utilise `lgpio`, compatible Raspberry Pi 4/5 sous Bookworm.  
-Vous pouvez configurer les boutons GPIO ou un encodeur rotatif dans `config.ini`.
+MoodeOLED utilise `lgpio`, vous pouvez configurer les boutons GPIO ou un encodeur rotatif dans `config.ini`.
 
 Exemple :
 
