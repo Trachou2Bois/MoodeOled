@@ -22,7 +22,7 @@ MoodeOLED is a user interface for an SSD1306 128x64 OLED screen to control [Mood
 
 - **Operating system**: Moode Audio Player ≥ 9.3.7 required.
 
-- **Hardware**: Raspberry Pi (Zero 2W, 3, 4, 5) + Oled ssd1306 i2c.
+- **Hardware**: Raspberry Pi (Zero 2W, 3, 4, 5) + Oled ssd1306 i2c. And IR receiver type TSOP38 or similar.
 
 - **APT dependencies** (installed automatically):
   
