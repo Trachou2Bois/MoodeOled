@@ -34,14 +34,13 @@ MoodeOLED is a user interface for an SSD1306 OLED screen to control [Moode Audio
 - **Python dependencies** (installed automatically):
   
   ```txt
-  Adafruit_Blinka
-  adafruit_circuitpython_ssd1306
-  lgpio
-  Pillow
-  python_mpd2
-  PyYAML
-  Requests
-  yt_dlp
+Adafruit_Blinka==8.55.0
+adafruit_circuitpython_ssd1306==2.12.19
+Pillow==11.3.0
+python_mpd2==3.0.5
+PyYAML==6.0.2
+Requests==2.32.4
+yt_dlp==2025.7.21
   ```
 
 ---
