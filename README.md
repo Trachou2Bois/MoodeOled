@@ -12,7 +12,7 @@ MoodeOLED is a user interface for an SSD1306/SSD1315 128x64 OLED screen to contr
 - **NavOLED**: Browse the music library, search, move, copy, delete to/from local or USB storage.
 - **QueOLED**: Displays and manages the playback queue. Playlist creation.
 - **Configuration help and IR remote mapping**: Assisted and fully customizable LIRC configuration with conflict detection. Ability to add custom actions to unused keys in MoodeOLED (see the `handle_custom_key` function in `media_key_actions.py`... *to be made more user-friendly*).
-- **(Untested) GPIO and rotary encoder support** using `lgpio`. Requires enabling and configuring pins in `config.ini` under the "manual" section.
+- **(Not Working) GPIO and rotary encoder support** using `lgpio` ( <= fck s**** ). Requires more work... enabling and configuring pins in `config.ini` under the "manual" section.
 - **ZRAM configuration** for low-memory devices (e.g., Raspberry Pi Zero 2W).
 - Automatic integration with Moode’s "Ready Script" for smooth startup.
 
