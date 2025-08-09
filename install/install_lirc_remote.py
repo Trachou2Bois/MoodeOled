@@ -20,8 +20,8 @@ MESSAGES = {
         "fr": "Langue / Language [fr/en] > "
     },
     "help_unavailable": {
-        "en": "⚠️ Cannot open help window.\nEnable X forwarding or check the README:\nhttps://github.com/touf2/MoodeOled/blob/main/readme.md",
-        "fr": "⚠️ Ouverture de l'aide à la configuration des touches impossible.\nActivez la redirection X11 si possible ou consultez le README:\nhttps://github.com/touf2/MoodeOled/blob/main/readme.md"
+        "en": "⚠️ Cannot open help window.\nEnable X forwarding or check the README:\nhttps://github.com/Trachou2Bois/MoodeOled",
+        "fr": "⚠️ Ouverture de l'aide à la configuration des touches impossible.\nActivez la redirection X11 si possible ou consultez le README:\nhttps://github.com/Trachou2Bois/MoodeOled"
     },
     "error_lirc_missing": {
         "en": "❌ LIRC is not installed.",
