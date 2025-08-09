@@ -98,6 +98,7 @@ python3 ~/MoodeOLED/install/install_lirc_remote.py
 
 Features:
 
+- Install and configure LIRC.
 - Hardware test (`mode2`, `irw`).
 - Download a configuration from `irdb-get`.
 - Learn a remote control (`irrecord`).
