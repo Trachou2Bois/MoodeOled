@@ -10,22 +10,72 @@ try:
 except ImportError:
     GPIO = None
 
-# === Données de débounce partagées ===
-debounce_data = {}
-DEBOUNCE_DELAY = 0.2
+# === Constants ===
+DEBOUNCE_DELAY = 0.1
+REPEAT_INTERVAL = 0.08  # intervalle en secondes entre repeat_code incrémentés
 
-# Placeholders for external messaging/logging if available
+# === Shared data ===
+debounce_data = {}
+
+# === External hooks ===
 show_message = None
 press_callback = None
 
-# === Traitement des touches avec gestion d'appui long/court ===
+# === Repeat threads tracking ===
+repeat_threads = {}
+repeat_counts = {}
+
+# --- Common repeat sender for GPIO and rotary button ---
+def repeat_sender(key, channel):
+    while key in repeat_counts:
+        time.sleep(REPEAT_INTERVAL)
+        if GPIO.input(channel) == GPIO.LOW:
+            repeat_counts[key] += 1
+            code = f"{repeat_counts[key]:02x}"
+            process_key(key, code)
+        else:
+            break
+    # Clean up when released
+    repeat_counts.pop(key, None)
+    repeat_threads.pop(key, None)
+
+# --- GPIO button event callback ---
+def gpio_event(channel, key):
+    if GPIO.input(channel) == GPIO.LOW:
+        if key not in repeat_threads:
+            repeat_counts[key] = 0
+            process_key(key, "00")  # premier appui
+            t = threading.Thread(target=repeat_sender, args=(key, channel), daemon=True)
+            repeat_threads[key] = t
+            t.start()
+    else:
+        # bouton relâché
+        repeat_counts.pop(key, None)
+        repeat_threads.pop(key, None)
+
+# --- Rotary button event callback ---
+def rotary_button_event(channel):
+    key = "KEY_PLAY"
+    if GPIO.input(channel) == GPIO.LOW:
+        if key not in repeat_threads:
+            repeat_counts[key] = 0
+            process_key(key, "00")
+            t = threading.Thread(target=repeat_sender, args=(key, channel), daemon=True)
+            repeat_threads[key] = t
+            t.start()
+    else:
+        repeat_counts.pop(key, None)
+        repeat_threads.pop(key, None)
+
+# === Traitement touches avec debounce ===
 def process_key(key, repeat_code):
     global debounce_data
     try:
         rep = int(repeat_code, 16)
     except Exception as e:
-        show_message("error process_key: ", e)
-        print("error process_key: ", e)
+        if show_message:
+            show_message(f"error process_key: {e}")
+        print("error process_key:", e)
         return
 
     if rep == 0:
@@ -54,10 +104,15 @@ def process_key(key, repeat_code):
     debounce_data[key]["timer"] = t
     t.start()
 
-# === LIRC Listener ===
+# === LIRC listener inchangé ===
 def lirc_listener(process_key, config):
     try:
-        proc = subprocess.Popen(["irw"], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, universal_newlines=True)
+        proc = subprocess.Popen(
+            ["irw"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.DEVNULL,
+            universal_newlines=True,
+        )
         while True:
             rlist, _, _ = select.select([proc.stdout], [], [], 0.1)
             if rlist:
@@ -70,30 +125,15 @@ def lirc_listener(process_key, config):
                     repeat_code = parts[1].strip()
                     process_key(key, repeat_code)
     except FileNotFoundError:
-        show_message("error: lirc missing")
+        if show_message:
+            show_message("error: lirc missing")
         print("error: lirc missing")
-        #config.set("manual", "use_lirc", "false")
     except Exception as e:
-        show_message("error lirc listener: ", e)
-        print("error lirc listener: ", e)
+        if show_message:
+            show_message(f"error lirc listener: {e}")
+        print("error lirc listener:", e)
 
-# === GPIO Listener ===
-def gpio_listener(key, pin, process_key):
-    pressed_time = None
-    while True:
-        if GPIO.input(pin) == GPIO.LOW:
-            if pressed_time is None:
-                pressed_time = time.time()
-            time.sleep(0.02)
-        else:
-            if pressed_time:
-                duration = time.time() - pressed_time
-                repeat_code = "06" if duration >= 1.0 else "00"
-                process_key(key, repeat_code)
-                pressed_time = None
-            time.sleep(0.05)
-
-# === Rotary Encoder ===
+# === Rotary encoder polling ===
 def rotary_listener(pin_a, pin_b, process_key):
     last_state = (1, 1)
     while True:
@@ -109,45 +149,38 @@ def rotary_listener(pin_a, pin_b, process_key):
             last_state = state
         time.sleep(0.01)
 
-def rotary_button_listener(pin_btn, process_key):
-    pressed_time = None
-    while True:
-        if GPIO.input(pin_btn) == GPIO.LOW:
-            if pressed_time is None:
-                pressed_time = time.time()
-            time.sleep(0.02)
-        else:
-            if pressed_time:
-                duration = time.time() - pressed_time
-                repeat_code = "06" if duration >= 1.0 else "00"
-                process_key("KEY_PLAY", repeat_code)
-                pressed_time = None
-            time.sleep(0.05)
-
 # === Entrée principale ===
 def start_inputs(config, process_press, msg_hook=None):
     global show_message, press_callback
     show_message = msg_hook
     press_callback = process_press
 
+    # LIRC
     if config.getboolean("manual", "use_lirc", fallback=True):
         threading.Thread(target=lirc_listener, args=(process_key, config), daemon=True).start()
 
+    # GPIO boutons
     if config.getboolean("manual", "use_gpio", fallback=False):
         if GPIO is None:
-            if show_message and t:
-                show_message("error : gpio missing")
-            #config.set("manual", "use_gpio", "false")
+            if show_message:
+                show_message("error: gpio missing")
         elif config.has_section("buttons"):
             for key, pin in config.items("buttons"):
                 try:
                     pin = int(pin)
                     GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-                    threading.Thread(target=gpio_listener, args=(key.upper(), pin, process_key), daemon=True).start()
+                    GPIO.add_event_detect(
+                        pin,
+                        GPIO.BOTH,
+                        callback=lambda ch, k=key.upper(): gpio_event(ch, k),
+                        bouncetime=int(DEBOUNCE_DELAY * 1000),
+                    )
                 except Exception as e:
-                    show_message("error gpio pin: ", e)
-                    print("error gpio pin: ", e)
+                    if show_message:
+                        show_message(f"error gpio pin: {e}")
+                    print("error gpio pin:", e)
 
+    # Rotary encoder + bouton rotary
     if config.getboolean("manual", "use_rotary", fallback=False) and config.has_section("rotary") and GPIO:
         try:
             pin_a = config.getint("rotary", "pin_a")
@@ -159,8 +192,14 @@ def start_inputs(config, process_press, msg_hook=None):
             GPIO.setup(pin_btn, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
             threading.Thread(target=rotary_listener, args=(pin_a, pin_b, process_key), daemon=True).start()
-            threading.Thread(target=rotary_button_listener, args=(pin_btn, process_key), daemon=True).start()
+            GPIO.add_event_detect(
+                pin_btn,
+                GPIO.BOTH,
+                callback=rotary_button_event,
+                bouncetime=int(DEBOUNCE_DELAY * 1000),
+            )
 
         except Exception as e:
-            show_message("error rotary: ", e)
-            print("error rotary: ", e)
+            if show_message:
+                show_message(f"error rotary: {e}")
+            print("error rotary:", e)
