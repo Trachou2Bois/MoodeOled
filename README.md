@@ -12,7 +12,7 @@ MoodeOLED is a user interface for an SSD1306/SSD1315 128x64 OLED screen to contr
 - **NavOLED**: Browse the music library, search, move, copy, delete to/from local or USB storage.
 - **QueOLED**: Displays and manages the playback queue. Playlist creation.
 - **Configuration help and IR remote mapping**: Assisted and fully customizable LIRC configuration with conflict detection. Ability to add custom actions to unused keys in MoodeOLED (see the `handle_custom_key` function in `media_key_actions.py`... *to be made more user-friendly*).
-- **(Not Working) GPIO and rotary encoder support** using `lgpio` ( <= fck s**** ). Requires more work... enabling and configuring pins in `config.ini` under the "manual" section.
+- **GPIO button and rotary encoder support** using `rpi_lgpio` . Enable and configure pins in `config.ini` under the "manual" section.
 - **ZRAM configuration** for low-memory devices (e.g., Raspberry Pi Zero 2W).
 - Automatic integration with Moode’s "Ready Script" for smooth startup.
 
@@ -34,13 +34,14 @@ MoodeOLED is a user interface for an SSD1306/SSD1315 128x64 OLED screen to contr
 - **Python dependencies** (installed automatically):
   
   ```txt
-  Adafruit_Blinka==8.55.0
-  adafruit_circuitpython_ssd1306==2.12.19
-  Pillow==11.3.0
-  python_mpd2==3.0.5
-  PyYAML==6.0.2
-  Requests==2.32.4
-  yt_dlp==2025.7.21
+  Adafruit_Blinka~=8.55.0
+  adafruit_circuitpython_ssd1306~=2.12.21
+  Pillow~=11.3.0
+  python_mpd2~=3.0.5
+  PyYAML~=6.0.2
+  Requests~=2.32.4
+  rpi_lgpio~=0.6
+  yt_dlp~=2025.7.21
   ```
 
 ---
@@ -124,7 +125,7 @@ KEY_NEXT = KEY_NEXTSONG
 
 ## ⌨ GPIO and rotary encoder support
 
-MoodeOLED uses `lgpio`, you can configure GPIO buttons or rotary encoders in `config.ini`.
+MoodeOLED uses `rpi_lgpio`, you can configure GPIO buttons or rotary encoders in `config.ini`. You can use `gpioinfo` to check which pins are free.
 
 Example:
 

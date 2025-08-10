@@ -12,7 +12,7 @@ MoodeOled est une interface utilisateur sur écran Oled SSD1306/SSD1315 128x64 p
 - **NavOLED**: Navigation dans la bibliothèque musicale, recherche, déplacement, copie, suppression vers/depuis stockage local ou usb.
 - **QueOLED**: Affiche et gère la file de lecture. Création de playlist.
 - **Aide à la configuration et Mappage de télécommande IR**: Configuration LIRC assistée et entièrement personnalisable avec détection de conflits. Possibilité d'ajouter des actions personnalisées aux touches non utilisées dans MoodeOled (voir la fonction handle_custom_key dans media_key_actions.py... *a rendre plus "user friendly") .
-- **(Not Working) GPIO and rotary encoder support using lgpio ( <= fck s**** ). Requires more work... enabling and configuring pins in config.ini under the "manual" section.
+- **Support boutons GPIO et encodeur rotatif** en utilisant `rpi_lgpio` . Activez et configurez les broches dans `config.ini` sous la section "manual".
 - **Configuration de ZRAM** pour les appareils à faible mémoire (ex: Raspberry Pi Zero 2W).
 - Intégration automatique avec le "Ready Script" de Moode pour un démarrage fluide.
 
@@ -34,13 +34,14 @@ MoodeOled est une interface utilisateur sur écran Oled SSD1306/SSD1315 128x64 p
 - **Dépendances Python** (installées automatiquement) :
   
   ```txt
-  Adafruit_Blinka==8.55.0
-  adafruit_circuitpython_ssd1306==2.12.19
-  Pillow==11.3.0
-  python_mpd2==3.0.5
-  PyYAML==6.0.2
-  Requests==2.32.4
-  yt_dlp==2025.7.21
+  Adafruit_Blinka~=8.55.0
+  adafruit_circuitpython_ssd1306~=2.12.21
+  Pillow~=11.3.0
+  python_mpd2~=3.0.5
+  PyYAML~=6.0.2
+  Requests~=2.32.4
+  rpi_lgpio~=0.6
+  yt_dlp~=2025.7.21
   ```
 
 ---
@@ -124,7 +125,7 @@ KEY_NEXT = KEY_NEXTSONG
 
 ## ⌨ Support GPIO et encodeur
 
-MoodeOLED utilise `lgpio`, vous pouvez configurer les boutons GPIO ou un encodeur rotatif dans `config.ini`.
+MoodeOLED utilise `rpi_lgpio`, vous pouvez configurer les boutons GPIO ou un encodeur rotatif dans `config.ini`. Vous pouvez utiliser `gpioinfo` pour vérifier vos broches libres.
 
 Exemple :
 
