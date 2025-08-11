@@ -1255,7 +1255,7 @@ def trigger_menu(index):
     finally:
         client.close()
         client.disconnect()
-        if multi_selection and selected_id in ("add_queue", "add_play", "clear_play"):
+        if multi_selection and selected_id in ("add_queue", "add_play", "clear_play", "copy_to", "delete"):
             selected_items.clear()
             multi_selection = False
 
