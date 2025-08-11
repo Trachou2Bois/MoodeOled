@@ -100,6 +100,7 @@ menu_add_queue: "Add to Queue"
 menu_add_play: "Add & Play"
 menu_clear_play: "Clear queue & Play"
 menu_copy_to: "Copy to..."
+menu_copy_selected_to: "Copy selected to..."
 menu_delete: "Delete"
 menu_deselect_all: "✓ Deselect All"
 

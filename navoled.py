@@ -59,7 +59,7 @@ menu_multi_selection_options = [
     {"id": "add_play", "label": core.t("menu_add_play")},
     {"id": "clear_play", "label": core.t("menu_clear_play")},
     {"id": "deselect_all", "label": core.t("menu_deselect_all")},
-    {"id": "copy_to", "label": core.t("menu_copy_to")}
+    {"id": "copy_to", "label": core.t("menu_copy_selected_to")}
 ]
 
 copy_mode_active = False

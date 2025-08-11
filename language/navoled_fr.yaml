@@ -100,6 +100,7 @@ menu_add_queue: "Ajouter à la file"
 menu_add_play: "Ajouter et jouer"
 menu_clear_play: "Vider la queue et jouer"
 menu_copy_to: "Copier vers..."
+menu_copy_selected_to: "Copier séléction vers..."
 menu_delete: "Supprimer"
 menu_deselect_all: "✓ Tout désélectionner"
 
