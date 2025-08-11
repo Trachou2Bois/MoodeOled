@@ -5,8 +5,8 @@ Long OK: Open Tools menu
 ←: Go back
 Long ←: Cancel / Return Home
 →: Enter a folder
-CH +: Add to playlist
-CH -: Remove from playlist
+CH +: Add to selection
+CH -: Remove from selection
 Info: Show this help
 ↵: Now Playing screen
 ↵ long: Playlist screen
