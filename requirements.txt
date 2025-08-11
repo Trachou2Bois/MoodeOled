@@ -5,4 +5,4 @@ python_mpd2~=3.0.5
 PyYAML~=6.0.2
 Requests~=2.32.4
 rpi_lgpio~=0.6
-yt_dlp~=2025.7.21
+yt_dlp>=2025.7.21
