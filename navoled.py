@@ -955,7 +955,7 @@ def render_screen():
 
 def draw_menu():
     if multi_selection:
-        core.draw_custom_menu(menu_multi_selection_options, menu_selection, title=core.t("title_play_selection"))
+        core.draw_custom_menu([item["label"] for item in menu_multi_selection_options], menu_selection, title=core.t("title_play_selection"))
     else:
         core.draw_custom_menu([item["label"] for item in menu_options], menu_selection, title=core.t("title_play_item"))
 
