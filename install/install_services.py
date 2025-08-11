@@ -58,7 +58,7 @@ MESSAGES = {
               "- Télécommande IR: nécessite LIRC. Vous pouvez le configurer maintenant ou plus tard.\n"
     },
     "lirc_prompt": {
-        "en": "Would you like to instrall and configure LIRC now? (requires an IR receiver connected to the GPIO pin) [Y/n] > ",
+        "en": "Would you like to install and configure LIRC now? (requires an IR receiver connected to the GPIO pin) [Y/n] > ",
         "fr": "Voulez-vous installer et configurer LIRC maintenant? (nécessite un récepteur ir branché sur broche gpio) [O/n] > "
     },
     "lirc_skip": {
