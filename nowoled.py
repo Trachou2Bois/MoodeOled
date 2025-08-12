@@ -848,11 +848,11 @@ def delete_songlog_entry(index_from_display):
             if 0 <= playing_index < len(songlog_lines):
                 delete_current = {songlog_lines[playing_index]}
 
-        # Si on supprime la piste en cours, passer à la suivante
-        if delete_current and stream_queue:
-            if core.DEBUG:
-                print("♻️  Track in play was deleted – skipping to next")
-            next_stream(manual_skip=True)
+            # Si on supprime la piste en cours, passer à la suivante
+            if delete_current and stream_queue:
+                if core.DEBUG:
+                    print("♻️  Track in play was deleted – skipping to next")
+                next_stream(manual_skip=True)
 
         new_all_lines = []
         for ln in all_lines:
