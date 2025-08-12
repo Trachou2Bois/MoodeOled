@@ -227,7 +227,6 @@ Les contributions et suggestions de fonctionnalités sont les bienvenues !
 Améliorations futures possibles :
 
 - Support d'écrans supplémentaires.
-- Test et configuration GPIO
 - Traduction dans d'autres langues
 - Amélioration de la doc
 
