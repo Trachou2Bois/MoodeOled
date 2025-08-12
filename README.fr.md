@@ -8,6 +8,8 @@ MoodeOled est une interface utilisateur sur écran Oled SSD1306/SSD1315 128x64 p
   <img src="screenshots/moodeoled_demo.gif" alt="MoodeOLED Demo">
 </p>
 
+Screenshots: [https://trachou2bois.github.io/MoodeOled/screenshots/](https://trachou2bois.github.io/MoodeOled/screenshots/)
+
 présentation en vidéo:
 [https://youtu.be/9Y13UeyyT7k?si=hkOkiP9gk0rjxlB8](https://youtu.be/9Y13UeyyT7k?si=hkOkiP9gk0rjxlB8)
 
