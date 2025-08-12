@@ -11,8 +11,9 @@ except ImportError:
     GPIO = None
 
 # === Constants ===
-DEBOUNCE_DELAY = 0.13
-REPEAT_INTERVAL = 0.08  # intervalle en secondes entre repeat_code incrémentés
+DEBOUNCE_DELAY = 0.15
+BOUNCETIME_DELAY = 0.05
+REPEAT_INTERVAL = 0.08
 
 # === Shared data ===
 debounce_data = {}
@@ -173,7 +174,7 @@ def start_inputs(config, process_press, msg_hook=None):
                         pin,
                         GPIO.BOTH,
                         callback=lambda ch, k=key.upper(): gpio_event(ch, k),
-                        bouncetime=int(DEBOUNCE_DELAY * 1000),
+                        bouncetime=int(BOUNCETIME_DELAY * 1000),
                     )
                 except Exception as e:
                     if show_message:
@@ -196,7 +197,7 @@ def start_inputs(config, process_press, msg_hook=None):
                 pin_btn,
                 GPIO.BOTH,
                 callback=rotary_button_event,
-                bouncetime=int(DEBOUNCE_DELAY * 1000),
+                bouncetime=int(BOUNCETIME_DELAY * 1000),
             )
 
         except Exception as e:
