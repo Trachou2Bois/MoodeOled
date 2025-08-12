@@ -118,14 +118,6 @@ def handle_custom_key(key, final_code, menu_context_flag=""):
         #    set_stream_manual_stop(manual_stop=True)
         #show_message("Your Message") #you can delete this line if not needed
         return True
-    elif key == "KEY_TEXT":
-        if menu_context_flag == "local_stream" and set_stream_manual_stop:
-            set_stream_manual_stop(manual_stop=True)
-        subprocess.run("mpc stop; mpc clear", shell=True, check=True)
-        time.sleep(1)
-        subprocess.run("mpc load Mes-Radios; mpc play", shell=True, check=True)
-        show_message("Reading Mes-Radios")
-        return True
     elif key == "KEY_RED":
         if menu_context_flag == "local_stream" and set_stream_manual_stop:
             set_stream_manual_stop(manual_stop=True)
@@ -133,22 +125,6 @@ def handle_custom_key(key, final_code, menu_context_flag=""):
         time.sleep(1)
         subprocess.run("mpc load Favorites; mpc play", shell=True, check=True)
         show_message("Reading Favorites")
-        return True
-    elif key == "KEY_GREEN":
-        if menu_context_flag == "local_stream" and set_stream_manual_stop:
-            set_stream_manual_stop(manual_stop=True)
-        subprocess.run("mpc stop; mpc clear", shell=True, check=True)
-        time.sleep(1)
-        subprocess.run("mpc load All; mpc play", shell=True, check=True)
-        show_message("Reading All")
-        return True
-    elif key == "KEY_YELLOW":
-        if menu_context_flag == "local_stream" and set_stream_manual_stop:
-            set_stream_manual_stop(manual_stop=True)
-        subprocess.run("mpc stop; mpc clear", shell=True, check=True)
-        time.sleep(1)
-        subprocess.run("mpc load Ma-Playlist; mpc play", shell=True, check=True)
-        show_message("Reading Ma-Playlist")
         return True
     elif key == "KEY_BLUE":
         if menu_context_flag == "local_stream" and set_stream_manual_stop:
