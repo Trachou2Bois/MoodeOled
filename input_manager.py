@@ -11,7 +11,7 @@ except ImportError:
     GPIO = None
 
 # === Constants ===
-DEBOUNCE_DELAY = 0.1
+DEBOUNCE_DELAY = 0.13
 REPEAT_INTERVAL = 0.08  # intervalle en secondes entre repeat_code incrémentés
 
 # === Shared data ===
