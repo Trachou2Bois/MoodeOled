@@ -50,7 +50,7 @@ info__stream_format: "Format '{fmt}' pour le profil '{profil}' peut être invali
 info_search_artist: "Recherche: {artist}"
 info_yt_found: "Trouvé : {title}"
 info_hls_fallback: "Flux HLS détecté (Essayez de mettre à jour yt-dlp ou de changer le format dans config.ini)"
-info_start_stream: "Démarrage du flux : {query}"
+info_start_stream: "Démarrage du flux"
 info_ffmpeg_killed: "ffmpeg tué"
 info_streaming: "Lecture : {title}"
 info_next_stream: "Piste suivante : {pos}/{total}"

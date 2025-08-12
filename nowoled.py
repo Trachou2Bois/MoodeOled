@@ -829,52 +829,67 @@ def delete_songlog_entry(index_from_display):
     global stream_queue, stream_queue_pos
     try:
         path = core.MOODEOLED_DIR / "songlog.txt"
-        # --- lire le fichier complet ---
+
+        # Assure que le fichier est accessible et songlog_lines aussi
         with open(path, "r", encoding="utf-8") as f:
             all_lines = [ln.rstrip("\n") for ln in f if ln.strip()]
+
         if not all_lines or not songlog_lines:
             core.show_message(core.t("info_nothing_delete"))
             return
-        # --- identifier la ligne cible et son index absolu (avant modif) ---
-        entries_inverted = all_lines[-50:][::-1]
-        target_line      = entries_inverted[index_from_display]
-        idx_abs          = songlog_lines.index(target_line)
-        # --- savoir si c'est la piste en cours de lecture ---
-        playing_abs = None
+
+        # Récupérer la ligne à supprimer dans songlog_lines
+        target_line = songlog_lines[index_from_display]
+        idx_abs = index_from_display  # index dans songlog_lines et stream_queue
+
+        # Vérifier si c'est la piste en cours de lecture
         if stream_queue and 0 <= stream_queue_pos < len(stream_queue):
-            playing_abs = stream_queue[stream_queue_pos]
-        delete_current = (playing_abs == idx_abs)
-        # --- réécrire le fichier sans la ligne ---
-        new_all_lines = [ln for ln in all_lines if ln != target_line]
+            playing_index = stream_queue[stream_queue_pos]
+            if 0 <= playing_index < len(songlog_lines):
+                delete_current = {songlog_lines[playing_index]}
+
+        # Si on supprime la piste en cours, passer à la suivante
+        if delete_current and stream_queue:
+            if core.DEBUG:
+                print("♻️  Track in play was deleted – skipping to next")
+            next_stream(manual_skip=True)
+
+        new_all_lines = []
+        for ln in all_lines:
+            if ln.startswith(target_line):
+                # C'est la ligne à supprimer, on l'ignore
+                continue
+            new_all_lines.append(ln)
+
         with open(path, "w", encoding="utf-8") as f:
             for ln in new_all_lines:
                 f.write(ln + "\n")
-        # --- mettre songlog_lines à jour (mêmes indices que new_all_lines) ---
+
+        # Mise à jour de songlog_lines : suppression par indice
         songlog_lines.pop(idx_abs)
-        # --- mettre à jour stream_queue ---
+
+        # Mise à jour de stream_queue : suppression des indices égaux et ajustement des autres
         new_queue = []
         for i in stream_queue:
             if i == idx_abs:
-                continue           # on enlève toutes les occurrences
+                continue
             new_queue.append(i - 1 if i > idx_abs else i)
-        # ajuster stream_queue_pos en fonction des retraits
+
+        # Ajuster la position dans la queue
         removed_before_pos = len(stream_queue) - len(new_queue)
         if stream_queue_pos >= len(new_queue):
             stream_queue_pos = max(0, len(new_queue) - 1)
         elif removed_before_pos and stream_queue_pos > 0:
             stream_queue_pos = max(0, stream_queue_pos - removed_before_pos)
-        stream_queue = new_queue  # affectation finale
-        # --- déclencher next_stream() si la piste jouée a été supprimée ---
-        if delete_current and stream_queue:
-            if core.DEBUG:
-                print("♻️  Track in play was deleted – skipping to next")
-            next_stream(manual_skip=True)
-        # --- feedback UI ---
+        stream_queue = new_queue
+
         core.show_message(core.t("info_entry_deleted"))
         time.sleep(1)
         show_songlog()
+
         if songlog_selection >= len(songlog_lines):
             songlog_selection = max(0, len(songlog_lines) - 1)
+
     except Exception as e:
         core.debug_error("error_rm_songlog", e)
         if not core.DEBUG:
@@ -1070,7 +1085,7 @@ def set_stream_manual_stop(manual_stop=True):
     global stream_manual_stop
     stream_manual_stop = manual_stop
 
-def yt_search_track(index, preload=False):
+def yt_search_track(index, preload=False, _fallback_attempt=False, local_query=None):
     global stream_url, final_title_yt, album_yt, artist_yt, query, blocking_render, stream_transition_in_progress
 
     core.load_renderer_states_from_db()
@@ -1089,14 +1104,12 @@ def yt_search_track(index, preload=False):
     )
     check_stream_format(stream_profile_selected["id"], stream_profile_selected["yt_format"], preload)
 
-    if index >= len(songlog_lines):
-        if not preload:
-            core.show_message(core.t("info_invalid_index"))
-        return
-
-    local_query = songlog_lines[index].strip()
-    if not preload:
-        query = local_query
+    if local_query is None:
+        if index >= len(songlog_lines):
+            if not preload:
+                core.show_message(core.t("info_invalid_index"))
+            return
+        local_query = songlog_lines[index].strip()
 
     if core.DEBUG:
         print(f"→ Search for: {local_query}")
@@ -1151,7 +1164,8 @@ def yt_search_track(index, preload=False):
                     stream_manual_skip = False
             return
     else:
-        print("❓ No entry in cache")
+        if core.DEBUG:
+            print("❓ No entry in cache")
 
     # Si pas dans le cache ou expiré : yt-dlp
     if not preload:
@@ -1270,6 +1284,22 @@ def yt_search_track(index, preload=False):
             stream_manual_skip = False
             stream_transition_in_progress = False
             blocking_render = False
+
+        # Gestion du fallback si pas déjà tenté
+        if not _fallback_attempt:
+            # Essayer fallback en simplifiant la query
+            parts = local_query.split(" - ")
+            if len(parts) == 2:
+                fallback_query = parts[1].strip()  # garder que le titre
+            else:
+                fallback_query = local_query  # pas de fallback possible
+
+            if core.DEBUG:
+                print(f"No results for query: {local_query}")
+                print(f"Retrying with fallback query: {fallback_query}")
+
+            return yt_search_track(index, preload=preload, _fallback_attempt=True, local_query=fallback_query)
+
         core.debug_error("error_yt", e)
         if not preload and not core.DEBUG:
             core.show_message(core.t("error_yt_simple"))
@@ -1345,9 +1375,9 @@ def stream_songlog_entry():
     )
 
     if core.DEBUG:
-        print(f"⇨ Start Local Stream for: {query}")
+        print(f"⇨ Start Local Stream")
 
-    core.message_text = core.t("info_start_stream", query=query)
+    core.message_text = core.t("info_start_stream")
     core.message_permanent = True
     blocking_render = True
     time.sleep(0.05)
@@ -1415,7 +1445,12 @@ def stream_songlog_entry():
                         break
 
             except Exception as e:
-                core.debug_error("error_stream", e)
+                if "NoneType" in str(e) and "stdout" in str(e):
+                    # erreur attendue lors de l'arrêt de ffmpeg, on ignore en mode normal
+                    if core.DEBUG:
+                        print(f"Ignored stream error on ffmpeg stop: {e}")
+                else:
+                    core.debug_error("error_stream", e)
 
             finally:
                 try:
