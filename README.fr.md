@@ -8,7 +8,7 @@ MoodeOled est une interface utilisateur sur écran Oled SSD1306/SSD1315 128x64 p
 
 ## ✨ Fonctionnalités
 
-- **NowOLED**: Affiche le morceau en cours, les métadonnées, l'état de lecture, infos matériel etc... Contrôles multimédia, ajout/retrait favoris (suis la playlist configurée dans Moode), modes de lecture, renderers (Bluetooth, Airplay et UPNP) etc, recherche de l'artiste en cours de lecture dans la bibliothèque musicale... Et un petit plus: Log des titres radios (via la touche "favoris") dans un fichier texte pour les lister dans le menu et possibilité de les rechercher via yt-dlp et les réécouter via un stream/radio local (sans téléchargement).
+- **NowOLED**: Affiche le morceau en cours, les métadonnées, l'état de lecture, infos matériel etc... Contrôles multimédia, ajout/retrait favoris (suit la playlist configurée dans Moode), modes de lecture, renderers (Bluetooth, Airplay et UPNP) etc, recherche de l'artiste en cours de lecture dans la bibliothèque musicale... Et un petit plus: Log des titres radios (via la touche "favoris") dans un fichier texte pour les lister dans le menu et possibilité de les rechercher via yt-dlp et les réécouter via un stream/radio local (sans téléchargement).
 - **NavOLED**: Navigation dans la bibliothèque musicale, recherche, déplacement, copie, suppression vers/depuis stockage local ou usb.
 - **QueOLED**: Affiche et gère la file de lecture. Création de playlist.
 - **Aide à la configuration et Mappage de télécommande IR**: Configuration LIRC assistée et entièrement personnalisable avec détection de conflits. Possibilité d'ajouter des actions personnalisées aux touches non utilisées dans MoodeOled (voir la fonction handle_custom_key dans media_key_actions.py... *a rendre plus "user friendly") .
