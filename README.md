@@ -224,7 +224,6 @@ Contributions and feature suggestions are welcome!
 Possible future improvements:
 
 - Support for additional displays.
-- GPIO testing and configuration.
 - Translation into more languages.
 - Documentation improvements.
 
