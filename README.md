@@ -8,6 +8,7 @@ MoodeOLED is an user interface for SSD1306/SSD1315 128x64 OLED screen to control
   <img src="screenshots/moodeoled_demo.gif" alt="MoodeOLED Demo">
 </p>
 
+Video presentation:
 [https://youtu.be/9Y13UeyyT7k?si=hkOkiP9gk0rjxlB8](https://youtu.be/9Y13UeyyT7k?si=hkOkiP9gk0rjxlB8)
 
 ---
