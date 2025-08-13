@@ -20,7 +20,7 @@ MESSAGES = {
         "en": (
             "This will configure LIRC for IR remotes connected to a GPIO receiver.\n"
             "Steps:\n"
-            "  1. Install LIRC if missing\n"
+            "  1. Install and configure LIRC if missing\n"
             "  2. Add or update dtoverlay=gpio-ir,gpio_pin=<pin> to /boot/firmware/config.txt\n"
             "  3. Update /etc/lirc/lirc_options.conf\n"
             "  4. Create backups of modified files\n"
@@ -29,10 +29,10 @@ MESSAGES = {
         "fr": (
             "Cette opération configure LIRC pour les télécommandes IR connectées sur GPIO.\n"
             "Étapes:\n"
-            "  1. Installer LIRC si nécessaire\n"
-            "  2. Ajouter ou mettre à jour dtoverlay=gpio-ir,gpio_pin=<pin> dans /boot/firmware/config.txt\n"
-            "  3. Mettre à jour /etc/lirc/lirc_options.conf\n"
-            "  4. Créer des sauvegardes des fichiers modifiés\n"
+            "  1. Installe et configure LIRC si nécessaire\n"
+            "  2. Ajoute ou mettre à jour dtoverlay=gpio-ir,gpio_pin=<pin> dans /boot/firmware/config.txt\n"
+            "  3. Met à jour /etc/lirc/lirc_options.conf\n"
+            "  4. Fait des sauvegardes des fichiers modifiés\n"
             "  5. Reboot requis avant la configuration de la télécommande\n"
         )
     },
@@ -72,6 +72,18 @@ MESSAGES = {
         "en": "🛠 Updating /etc/lirc/lirc_options.conf...",
         "fr": "🛠 Mise à jour de /etc/lirc/lirc_options.conf..."
     },
+    "enable_use_lirc": {
+        "en": "🛠 Enabling 'use_lirc' in config.ini...",
+        "fr": "🛠 Activation de 'use_lirc' dans config.ini..."
+    },
+    "use_lirc_enabled": {
+        "en": "✅ 'use_lirc' set to true in config.ini.",
+        "fr": "✅ 'use_lirc' réglé sur true dans config.ini."
+    },
+    "use_lirc_not_found": {
+        "en": "⚠️ 'use_lirc' entry not found in config.ini. Please update manually.",
+        "fr": "⚠️ Entrée 'use_lirc' introuvable dans config.ini. Veuillez la mettre à jour manuellement."
+    },
     "remote_setup_info": {
         "en": "ℹ️ After reboot, run ' python3 ~/MoodeOled/install/install_lirc_remote.py ' to configure your remote.",
         "fr": "ℹ️ Après redémarrage, exécutez ' python3 ~/MoodeOled/install/install_lirc_remote.py ' pour configurer votre télécommande."
@@ -94,6 +106,7 @@ MESSAGES = {
     }
 }
 
+CONFIG_INI = os.path.expanduser("~/MoodeOled/config.ini")
 CONFIG_TXT = "/boot/firmware/config.txt"
 LIRC_OPTIONS = "/etc/lirc/lirc_options.conf"
 
@@ -212,6 +225,31 @@ def update_lirc_options(lang):
     safe_write_file(LIRC_OPTIONS, updated_lines)
     print(MESSAGES["lirc_conf_update"][lang])
 
+def enable_use_lirc_in_config(lang):
+    if not os.path.exists(CONFIG_INI):
+        print(MESSAGES["use_lirc_not_found"][lang])
+        return
+
+    with open(CONFIG_INI, "r", encoding="utf-8") as f:
+        lines = f.readlines()
+
+    found = False
+    for i, line in enumerate(lines):
+        if line.strip().lower().startswith("use_lirc"):
+            parts = line.split("=")
+            if len(parts) == 2:
+                lines[i] = f"use_lirc = true\n"
+                found = True
+            break
+
+    if found:
+        print(MESSAGES["enable_use_lirc"][lang])
+        with open(CONFIG_INI, "w", encoding="utf-8") as f:
+            f.writelines(lines)
+        print(MESSAGES["use_lirc_enabled"][lang])
+    else:
+        print(MESSAGES["use_lirc_not_found"][lang])
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--lang", required=True, choices=["en", "fr"])
@@ -229,6 +267,7 @@ def main():
     ensure_lirc_installed(lang)
     update_config_txt(lang)
     update_lirc_options(lang)
+    enable_use_lirc_in_config(lang)
 
     print(MESSAGES["moode_reminder"][lang])
     print(MESSAGES["remote_setup_info"][lang])
