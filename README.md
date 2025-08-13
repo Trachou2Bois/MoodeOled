@@ -5,7 +5,7 @@
 MoodeOLED is an user interface for SSD1306/SSD1315 128x64 OLED screen to control [Moode Audio](https://moodeaudio.org/) via IR remote control or GPIO buttons.
 
 <p align="center">
-  <img src="screenshots/moodeoled_demo.gif" alt="MoodeOLED Demo">
+  <img src="https://github.com/Trachou2Bois/MoodeOled/blob/main/docs/screenshots/moodeoled_demo.gif" alt="MoodeOLED Demo">
 </p>
 
 Screenshots: [https://trachou2bois.github.io/MoodeOled/screenshots/](https://trachou2bois.github.io/MoodeOled/screenshots/)
