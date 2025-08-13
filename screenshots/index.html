@@ -2,37 +2,49 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>MoodeOLED Screenshots</title>
+<title>MoodeOled Screenshots</title>
 <style>
-  body { font-family: Arial, sans-serif; background: #111; color: #fff; margin: 0; padding: 20px; text-align: center; }
-  h1 { margin-bottom: 20px; }
-  .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 10px; max-width: 1300px; margin: auto; }
-  .gallery img { width: 100%; height: auto; border-radius: 6px; box-shadow: 0 0 10px rgba(0,0,0,0.5); transition: transform 0.2s; }
-  .gallery img:hover { transform: scale(1.03); }
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #111;
+    color: #fff;
+    margin: 0;
+    padding: 10px;
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 10px;
+  }
+  .gallery img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.6);
+  }
 </style>
 </head>
 <body>
-<h1>MoodeOLED Screenshots</h1>
+
+<h1>MoodeOled Screenshots</h1>
 <div class="gallery" id="gallery"></div>
 
 <script>
-const repoOwner = "Trachou2Bois";
-const repoName = "MoodeOled";
-const folderPath = "screenshots";
-
-fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/contents/${folderPath}`)
-  .then(response => response.json())
-  .then(files => {
-    const gallery = document.getElementById("gallery");
-    files
-      .filter(file => file.name.toLowerCase().endsWith(".jpg"))
-      .forEach(file => {
+  fetch('images.json')
+    .then(response => response.json())
+    .then(images => {
+      const gallery = document.getElementById("gallery");
+      images.forEach(file => {
         const img = document.createElement("img");
-        img.src = file.download_url;
+        img.src = file;
         gallery.appendChild(img);
       });
-  })
-  .catch(error => console.error("Erreur chargement images:", error));
+    });
 </script>
+
 </body>
 </html>
