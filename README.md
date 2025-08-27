@@ -1,11 +1,11 @@
-# MoodeOLED
+# MoodeOled
 
 [Français](README.fr.md)
 
-MoodeOLED is an user interface for SSD1306/SSD1315 128x64 OLED screen to control [Moode Audio](https://moodeaudio.org/) via IR remote control or GPIO buttons.
+MoodeOled is an user interface for SSD1306/SSD1315 128x64 OLED screen to control [Moode Audio](https://moodeaudio.org/) via IR remote control or GPIO buttons.
 
 <p align="center">
-  <img src="https://github.com/Trachou2Bois/MoodeOled/blob/main/docs/screenshots/moodeoled_demo.gif" alt="MoodeOLED Demo">
+  <img src="https://github.com/Trachou2Bois/MoodeOled/blob/main/docs/screenshots/moodeoled_demo.gif" alt="MoodeOled Demo">
 </p>
 
 Screenshots: [https://trachou2bois.github.io/MoodeOled/screenshots/](https://trachou2bois.github.io/MoodeOled/screenshots/)
@@ -20,7 +20,7 @@ Video presentation:
 - **NowOLED**: Displays the current track, metadata, playback status, hardware info, etc. Media controls, add/remove favorites (follows the playlist configured in Moode), playback modes, renderers (Bluetooth, Airplay, and UPNP), search for the currently playing artist in the music library… And a little extra: Logs radio track titles (via the "favorites" button) into a text file to list them in the menu, and lets you search them via yt-dlp and replay them via a local stream/radio (no download).
 - **NavOLED**: Browse the music library, search, move, copy, delete to/from local or USB storage.
 - **QueOLED**: Displays and manages the playback queue. Playlist creation.
-- **Configuration help and IR remote mapping**: Assisted and fully customizable LIRC configuration with conflict detection. Ability to add custom actions to unused keys in MoodeOLED (see the `handle_custom_key` function in `media_key_actions.py`... *to be made more user-friendly*).
+- **Configuration help and IR remote mapping**: Assisted and fully customizable LIRC configuration with conflict detection. Ability to add custom actions to unused keys in MoodeOled (see the `handle_custom_key` function in `media_key_actions.py`... *to be made more user-friendly*).
 - **GPIO button and rotary encoder support** using `rpi_lgpio` . Enable and configure pins in `config.ini` under the "manual" section.
 - **ZRAM configuration** for low-memory devices (e.g., Raspberry Pi Zero 2W).
 - Automatic integration with Moode’s "Ready Script" for smooth startup.
@@ -99,10 +99,10 @@ Switch between the 3 main display scripts using the `KEY_BACK` button.
 
 ## 🎛 IR remote configuration
 
-MoodeOLED includes an interactive script to configure LIRC:
+MoodeOled includes an interactive script to configure LIRC:
 
 ```bash
-python3 ~/MoodeOLED/install/install_lirc_remote.py
+python3 ~/MoodeOled/install/install_lirc_remote.py
 ```
 
 Features:
@@ -134,7 +134,7 @@ KEY_NEXT = KEY_NEXTSONG
 
 ## ⌨ GPIO and rotary encoder support
 
-MoodeOLED uses `rpi_lgpio`, you can configure GPIO buttons or rotary encoders in `config.ini`. You can use `gpioinfo` to check which pins are free.
+MoodeOled uses `rpi_lgpio`, you can configure GPIO buttons or rotary encoders in `config.ini`. You can use `gpioinfo` to check which pins are free.
 
 Example:
 
@@ -174,7 +174,7 @@ These keys are **required** to navigate and control all interfaces:
 | **KEY_CHANNELDOWN**  | Context action                                    | Remove from queue                                          |
 | **KEY_PLAY**         | If outside menu: Play/Pause / Shutdown (long press)| Same                                                       |
 
-These keys must be configured either via LIRC (`python3 ~/MoodeOLED/install/install_lirc_remote.py`) or via GPIO (`[buttons]` section in `config.ini`).
+These keys must be configured either via LIRC (`python3 ~/MoodeOled/install/install_lirc_remote.py`) or via GPIO (`[buttons]` section in `config.ini`).
 
 ### 🎵 Optional media keys
 
