@@ -1,11 +1,11 @@
-# MoodeOLED
+# MoodeOled
 
 [English](README.md)
 
 MoodeOled est une interface utilisateur sur écran Oled SSD1306/SSD1315 128x64 pour contrôler [Moode Audio](https://moodeaudio.org/) via une télécommande IR ou des boutons GPIO.
 
 <p align="center">
-  <img src="screenshots/moodeoled_demo.gif" alt="MoodeOLED Demo">
+  <img src="screenshots/moodeoled_demo.gif" alt="MoodeOled Demo">
 </p>
 
 Screenshots: [https://trachou2bois.github.io/MoodeOled/screenshots/](https://trachou2bois.github.io/MoodeOled/screenshots/)
@@ -99,10 +99,10 @@ On switch entre les 3 principaux script d'affichage via la touche KEY_BACK
 
 ## 🎛 Configuration de la télécommande IR
 
-MoodeOLED inclut un script interactif pour configurer LIRC :
+MoodeOled inclut un script interactif pour configurer LIRC :
 
 ```bash
-python3 ~/MoodeOLED/install/install_lirc_remote.py
+python3 ~/MoodeOled/install/install_lirc_remote.py
 ```
 
 Fonctionnalités :
@@ -134,7 +134,7 @@ KEY_NEXT = KEY_NEXTSONG
 
 ## ⌨ Support GPIO et encodeur
 
-MoodeOLED utilise `rpi_lgpio`, vous pouvez configurer les boutons GPIO ou un encodeur rotatif dans `config.ini`. Vous pouvez utiliser `gpioinfo` pour vérifier vos broches libres.
+MoodeOled utilise `rpi_lgpio`, vous pouvez configurer les boutons GPIO ou un encodeur rotatif dans `config.ini`. Vous pouvez utiliser `gpioinfo` pour vérifier vos broches libres.
 
 Exemple :
 
@@ -174,7 +174,7 @@ Ces touches sont **requises** pour naviguer et contrôler toutes les interfaces 
 | **KEY_CHANNELDOWN** | Action contextuelle                                   | Retirer de la file de lecture                              |
 | **KEY_PLAY**        | Si hors menu: Lecture/pause / Extinction (long press) | Si hors menu: Lecture/pause / Extinction (long press)      |
 
-Ces touches sont à configurer soit via LIRC (`python3 ~/MoodeOLED/install/install_lirc_remote.py`), soit via GPIO (section `[buttons]` du `config.ini`).
+Ces touches sont à configurer soit via LIRC (`python3 ~/MoodeOled/install/install_lirc_remote.py`), soit via GPIO (section `[buttons]` du `config.ini`).
 
 ### 🎵 Touches multimédia (optionnelles)
 
