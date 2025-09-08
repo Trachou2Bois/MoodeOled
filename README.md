@@ -1,6 +1,19 @@
 # MoodeOled
 
-[Français](README.fr.md)
+#### MoodeOled has been completely reworked to allow the use of different I2c and SPI displays. It is now called [OliPi Moode](https://github.com/OliPi-Project/olipi-moode). If you already have MoodeOled installed, you must uninstall it before install OliPi Moode with the following command:
+
+this script uninstall all MoodeOled without leaving any residue (services, folder, line in .profile/ready-script relative to MoodeOled):
+```
+curl -sSL https://github.com/Trachou2Bois/MoodeOled/blob/main/uninstall-moodeoled.sh -o uninstall-moodeoled.sh
+sudo bash uninstall-moodeoled.sh
+```
+(Optional: use --dry-run to check before without deleting anything:)
+```
+sudo bash uninstall-moodeoled.sh --dry-run
+```
+
+---
+---
 
 MoodeOled is an user interface for SSD1306/SSD1315 128x64 OLED screen to control [Moode Audio](https://moodeaudio.org/) via IR remote control or GPIO buttons.
 
