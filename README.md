@@ -224,7 +224,17 @@ In **Moode > System Config**:
 - Enable **LCD Updater** (Peripherals).
 
 ---
+## Uninstall
+You can uninstall all without leaving any residue with the following command:
+```
+sudo bash ~/MoodeOled/uninstall-moodeoled.sh
+```
+(Can use with --dry-run to check before without changing anything):
+```
+sudo bash ~/MoodeOled/uninstall-moodeoled.sh --dry-run
+```
 
+---
 ## 🤝 Contributing
 
 Contributions and feature suggestions are welcome!  
