@@ -1,4 +1,18 @@
-# MoodeOled
+# MoodeOled a grandi
+#### MoodeOled a été entièrement repensé pour permettre l'utilisation de différents affichages I2C et SPI. Il s'appelle désormais [OliPi Moode](https://github.com/OliPi-Project/olipi-moode). Si MoodeOled est déjà installé, vous devez le désinstaller avant d'installer OliPi Moode avec la commande suivante :
+
+Ce script désinstalle tous les MoodeOled sans laisser de résidus (services, dossier, lignes dans .profile/ready-script relative à MoodeOled) :
+```
+curl -sSL https://github.com/Trachou2Bois/MoodeOled/blob/main/uninstall-moodeoled.sh -o uninstall-moodeoled.sh
+sudo bash uninstall-moodeoled.sh
+```
+(Facultatif : utilisez --dry-run pour vérifier avant sans rien supprimer :)
+```
+sudo bash uninstall-moodeoled.sh --dry-run
+```
+
+---
+---
 
 [English](README.md)
 
